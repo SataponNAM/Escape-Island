@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -51,39 +53,26 @@ public class LoadSave {
 		return img;
 	}
 
-    // load all levels
-    public static BufferedImage[] GetAllLevels(){
-        URL url = LoadSave.class.getResource("/res/levels");
-        File file = null;
-
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        File[]  files = file.listFiles();
-        File[] filesSort = new File[files.length];
-
-        // sort file level => 1, 2, 3, ...
-        for (int i = 0; i < filesSort.length; i++) {
-            for (int j = 0; j < files.length; j++) {
-                if (files[j].getName().equals("" + (i + 1) + ".png")) {
-                    filesSort[i] = files[j];
-                }
+    public static BufferedImage[] GetAllLevels() {
+        List<BufferedImage> levelImages = new ArrayList<>();
+        
+        for (int i = 1; ; i++) {
+            String resourceName = "/res/levels/" + i + ".png";
+            InputStream inputStream = LoadSave.class.getResourceAsStream(resourceName);
+            
+            if (inputStream == null) {
+                // No more levels 
+                break;
             }
-        }
-
-        BufferedImage[] Imgs = new BufferedImage[filesSort.length];
-
-        for (int i = 0; i < Imgs.length; i++) {
+            
             try {
-                Imgs[i] = ImageIO.read(filesSort[i]);
+                BufferedImage levelImage = ImageIO.read(inputStream);
+                levelImages.add(levelImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        return Imgs;
-    } 
+        
+        return levelImages.toArray(new BufferedImage[0]);
+    }
 }

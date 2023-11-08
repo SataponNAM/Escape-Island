@@ -344,6 +344,8 @@ public class Player extends Entity {
         inAir = false;
         attacking = false;
         moving = false;
+        airSpeed = 0f;
+        jump = false;
         playerAction = IDLE;
         currentHealth = maxHealth;
 
