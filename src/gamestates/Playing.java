@@ -90,7 +90,7 @@ public class Playing extends State implements StateMethods{
         } 
     }
 
-    // เช็คซ้าย ขวา สำหรับ load map
+    // เช็คซ้าย ขวา สำหรับ load map เวลาเดิน
     private void checkCloseToBorder() {
         int playerX = (int) player.getHitbox().getX();
         int diff = playerX - xLvlOffset;

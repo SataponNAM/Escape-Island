@@ -85,6 +85,7 @@ public class Player extends Entity {
     public void update(){
         updateHealth();
 
+        // เลือดหมดจะจบเกม
         if (currentHealth <= 0) {
             playing.setGameOver(true);
             return;
@@ -105,7 +106,7 @@ public class Player extends Entity {
         setAnimation();
     }
 
-    // check ว่าโดน spike trap ไหม
+    // check ว่าโดน spike ไหม
     private void checkSpikeTouch() {
         playing.checkSpikeTouch(this);
     }
@@ -115,7 +116,7 @@ public class Player extends Entity {
         playing.checkPortalTouch(this);
     }
 
-    // check ว่า player โจมตีไหม
+    // check ว่า player โจมตี
     private void checkAttack() {
         if (attackCheck || aniIndex != 0) {
             return;
@@ -138,6 +139,7 @@ public class Player extends Entity {
         healthWidth = (int) ((currentHealth / (float) maxHealth) * healthBarWidth);
     }
 
+    // วาด
     public void render(Graphics g, int xLvlOffset){
         g.drawImage(animations[playerAction][aniIndex], 
             (int)(hitbox.x - xDrawoffset) - xLvlOffset + flipX, 
@@ -205,7 +207,8 @@ public class Player extends Entity {
         
         if (!inAir) {
             if ((!left && !right) || (right && left)){
-			    return;} 
+			    return;
+            } 
         }
 
 		float xSpeed = 0;
@@ -213,12 +216,12 @@ public class Player extends Entity {
 		if (left){ // เดินซ้าย
 			xSpeed -= playerSpeed;
             flipX = width;
-            flipW = -1;
+            flipW = -1; // กลับด้าน
         }
 		if (right){ // เดินขวา
 			xSpeed += playerSpeed;
             flipX = 0;
-            flipW = 1;
+            flipW = 1; // กลับด้าน
         }
 
 		if (!inAir){

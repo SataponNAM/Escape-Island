@@ -53,6 +53,7 @@ public class LoadSave {
 		return img;
 	}
 
+    // load all levels
     public static BufferedImage[] GetAllLevels() {
         List<BufferedImage> levelImages = new ArrayList<>();
         
@@ -61,7 +62,7 @@ public class LoadSave {
             InputStream inputStream = LoadSave.class.getResourceAsStream(resourceName);
             
             if (inputStream == null) {
-                // No more levels 
+                // no more levels 
                 break;
             }
             

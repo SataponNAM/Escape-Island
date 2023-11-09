@@ -21,15 +21,18 @@ public class LevelManager {
         buildAllLevels();
     }
 
+    // load next level
     public void loadNextLevel() {    
         levelIndex++;
-        if(levelIndex >= levels.size()){ // - 1
-            levelIndex = 0; // levels.size()-1
+        // ถ้าผ่านด่านสุดท้าย
+        if(levelIndex >= levels.size()){ 
+            levelIndex = 0; 
             System.out.println("WIN Game Complete");
             // show win game UI
             game.getPlaying().setGameWin(true);
         }  
 
+        // load new level
         Level newLevel = levels.get(levelIndex);
         game.getPlaying().getEnemyManager().loadEnemies(newLevel);
         game.getPlaying().getPlayer().loadlvlData(newLevel.getlvlData());
@@ -37,6 +40,7 @@ public class LevelManager {
         game.getPlaying().getObjectManager().loadObject(newLevel); 
     }
 
+    // สร้าง levels ทั้งหมด โดยเพิ่มเข้าไปใน ArrayList levels
     private void buildAllLevels() {
         BufferedImage[] allLevels = LoadSave.GetAllLevels();
 
@@ -45,7 +49,7 @@ public class LevelManager {
         }
     }
 
-    // load tile
+    // load tiles
     private void importTileSprite() {
         BufferedImage img = LoadSave.GetAtlas(LoadSave.LEVEL_ATLAS);
         levelSprite = new BufferedImage[30];
@@ -57,7 +61,7 @@ public class LevelManager {
         }
     }
 
-    // draw tile in level
+    // draw tile in each level
     public void draw(Graphics g, int xLvlOffset){
         for(int j = 0; j < Game.TILES_IN_HEIGHT; j++){
             for (int i = 0; i < levels.get(levelIndex).getlvlData()[0].length; i++) {
@@ -73,6 +77,7 @@ public class LevelManager {
         return levels.get(levelIndex);
     }
 
+    // get level ทั้งหมด
     public int getAmountOfLevels(){
         return levels.size();
     }

@@ -35,6 +35,7 @@ public class Enemy extends Entity{
         currentHealth = maxHealth;
     }
 
+    // เช็คตอนโหลดครั้งแรก
     protected void firstupdateCheck(int[][] lvlData){
         if(!IsEntityOnFloor(hitbox, lvlData)){
             inAir = true;
@@ -59,6 +60,8 @@ public class Enemy extends Entity{
                 return;
             }
         }
+
+        // ติดขอบแล้วเปลี่ยนทิศเดิน
         changeWalkDir();
     }
 
@@ -112,6 +115,7 @@ public class Enemy extends Entity{
         attackCheck = true;
     }
 
+    // ถ้าอยู่กลางอากาศจะตกลงพื้น
     protected void updateInAir(int[][] lvlData){
         if(CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, lvlData)){
             hitbox.y += fallSpeed;

@@ -29,6 +29,7 @@ public class HelpMethod {
 		return false;
 	}
 	
+	// เช็คว่าเป็น block ไหม
     private static boolean IsSolid(float x, float y, int[][] lvlData){
 		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
 
@@ -91,6 +92,7 @@ public class HelpMethod {
         return true;
     }
 
+	// เช็คว่าเป็นพื้นไหม
 	public static boolean IsFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
 		if (xSpeed > 0) {
 			return IsSolid(hitbox.x + hitbox.width + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
@@ -102,9 +104,12 @@ public class HelpMethod {
 	// เช็คว่าเดินได้ไหม
 	public static boolean IsAllTileWalkable(int xStart, int xEnd, int y, int[][] lvlData){
 		for (int i = 0; i < xEnd - xStart; i++) {
+			// เช็คว่าระหว่าง player กับ enemy tile ทึบไหม หรือมี block ไหม
+			// แกน x แนวราบ
 			if (IsTileSolid(xStart + i, y, lvlData)) {
 				return false;
 			}
+			// แกน y เป็นเนินขึ้นมา
 			if (!IsTileSolid(xStart + i, y + 1, lvlData)) {
 				return false;
 			}
@@ -112,10 +117,10 @@ public class HelpMethod {
 		return true;
 	} 
 
-	// สำหรับ enemy เช็ค player กรณีถ้าเป็นเหวลงไป หรืออยู่ยนเนิน
+	// สำหรับ enemy เช็ค player ว่าด้านหน้าสามารถเห็น player ได้ไหม กรณีถ้าเป็นเหวลงไป หรืออยู่บนเนิน
 	public static boolean isSightClear(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int tileY){
-		int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE);
-		int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
+		int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE); // enemy's hitbox
+		int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE); // player's hitbox
 
 		if (firstXTile > secondXTile) {
 			return IsAllTileWalkable(secondXTile, firstXTile, tileY, lvlData);
@@ -124,7 +129,7 @@ public class HelpMethod {
 		}
 	}
 
-	// load level
+	// load tile level 
     public static int[][] GetLevelData(BufferedImage img) {
 		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 
@@ -141,6 +146,7 @@ public class HelpMethod {
 	}
 
 	 // load crab
+	 // get Green = 0
     public static ArrayList<Crab> GetCrabs(BufferedImage img){
         ArrayList<Crab> list = new ArrayList<>();
 
@@ -156,6 +162,7 @@ public class HelpMethod {
     } 
 
     // load worm
+	// get Green = 5
     public static ArrayList<Worm> GetWorms(BufferedImage img){
         ArrayList<Worm> list2 = new ArrayList<>();
 
@@ -170,7 +177,8 @@ public class HelpMethod {
 		return list2;
     }
 
-	// player spawn
+	// player spawn from level image
+	// get Green = 100
 	public static Point GetPLayerSpawn(BufferedImage img){
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
@@ -183,7 +191,8 @@ public class HelpMethod {
 		return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
 	}
 
-	// load Portal
+	// load Portal from level image
+	// get Blue = 0
 	public static ArrayList<Portal> GetPortal(BufferedImage img){
         ArrayList<Portal> list = new ArrayList<>();
 
@@ -199,7 +208,8 @@ public class HelpMethod {
 		return list;
     }
 
-	// load Spike
+	// load Spike from level image 
+	// get Blue = 1
     public static ArrayList<Spike> getSpike(BufferedImage img) {
 		ArrayList<Spike> list = new ArrayList<>();
 

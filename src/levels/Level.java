@@ -38,6 +38,7 @@ public class Level {
         calPlayerSpawn();
     }   
 
+    // create objects
     private void createSpike() {
         spikes = HelpMethod.getSpike(img);
     }
@@ -46,10 +47,12 @@ public class Level {
         portals = HelpMethod.GetPortal(img);
     }
 
+    // calculate player spawn
     private void calPlayerSpawn() {
         PlayerSpawn = GetPLayerSpawn(img);
     }
 
+    // calculate level offset
     private void calLevelOffset() {
         lvlTilesWide = img.getWidth();
         maxTileOffset = lvlTilesWide = Game.TILES_IN_WIDTH;
